@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/static/css/css.css" type="text/css" rel="stylesheet">
+</head>
+<script src="../static/js/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("#span").hide();
+        $("#idc").hide();
+        $("#en").hide();
+    })
+    function pwds(){
+        var pdrx=$("#sm").val();
+        var wdrx=$("#zm").val();
+        if (pdrx.length<6){
+            document.getElementById("zc").disabled=true;
+        }else {
+            if(pdrx!=wdrx){
+                $("#span").show();
+            }else{
+                $("#span").hide();
+            }
+            document.getElementById("zc").disabled = false;
+        }
+    }
+    function idcard(){
+        var idCard=$("#idCard").val();
+        var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        if(!reg.test(idCard)){
+            $("#idc").show();
+            document.getElementById("zc").disabled=true;
+        }else{
+            $("#idc").hide();
+            document.getElementById("zc").disabled=false;
+        }
+    }
+
+    function idens(){
+        var iden = $("#iden").val();
+        var pattern = /^([1-9]{1})(\d{14}|\d{18})$/;
+        if(!pattern.test(iden)){
+            $("#en").show();
+            document.getElementById("zc").disabled=true;
+        }else{
+            $("#en").hide();
+            document.getElementById("zc").disabled=false;
+        }
+    }
+    function bank() {
+        var modie = $("#modie").val();
+        var iden = $("#iden").val();
+        var idCard = $("#idCard").val();
+        var zm = $("#zm").val();
+        var uname = $("#uname").val();
+        var card = $("#card").val();
+        var cards = $("#cards").val();
+        var regex = /^[1][3,4,5,7,8][0-9]{9}$/;
+        if (!regex.test(modie)) {
+            alert("手机号输入有误");
+        } else (
+            $.post("yanz", {"phone": modie,"identity":iden,"idCard":idCard,"pwd":zm,"uname":uname,"card":card,"cards":cards}, function (data) {
+                alert(data)
+                $("#modie").val(data);
+            },"text")
+        )
+    }
+</script>
+<body>
+<form action="insert" method="post">
+    <table>
+        <tr>
+            <td>流水帐号:<span id="card" th:text="${session.number}"></span></td>
+            <td>银行卡号<input type="text" name="identity" id="iden" th:value="${session.identity}" onblur="idens()"><span id="en">银行卡输入不正确</span></td>
+        </tr>
+        <tr>
+            <td>用户名称:<span id="uname" th:text="${session.hou}"></span><input type="hidden" name="bname"  th:value="${session.uname}"></td>
+            <td>证件号<input type="text" name="idCard" maxlength="18" id="idCard" th:value="${session.idCard}" onblur="idcard()"><span id="idc">省份证输入不正确</span></td>
+        </tr>
+        <tr>
+            <td>身份属性:<span id="cards" th:text="${session.arr}"></span></td>
+            <td>输入密码<input type="password"  placeholder="6-32位密码"  id="sm" th:value="${session.pwd}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>再次输入密码<input type="password" name="pwd" placeholder="6-32位密码"  id="zm" th:value="${session.pwd}" onblur="pwds()"><span id="span">密码不相等</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>手机号<input type="text" name="phone" placeholder="手机号" id="modie" maxlength="11" th:value="${session.phone}" ><input type="button" onclick="bank()" value="获取验证码"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>验证码<input type="text" name="code"placeholder="短信验证码"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="checkbox" name="state" value="1">同意</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="注册" id="zc"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
