@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="pppig_object" />
+        <module name="pppig_user" />
+        <module name="pppig_common" />
+        <module name="pppig_manage" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ppp_common" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="pppig_common" options="-parameters" />
+      <module name="pppig_manage" options="-parameters" />
+      <module name="pppig_object" options="-parameters" />
+      <module name="pppig_user" options="-parameters" />
+    </option>
+  </component>
+</project>

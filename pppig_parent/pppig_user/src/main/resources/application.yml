@@ -1,0 +1,17 @@
+server: 
+  port: 9001
+spring: 
+  application:  
+    name: pppig_user
+  datasource:  
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/pangpangzhu?useUnicode=true&amp;characterEncoding=UTF8
+    username: root
+    password: root
+  jpa: 
+    database: MySQL
+    show-sql: true
+jwt:
+  config:
+    key: itcast
+    ttl: 360000
